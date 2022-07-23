@@ -1,11 +1,16 @@
 package server
 
-import "github.com/gorilla/mux"
+import (
+	"context"
+	"errors"
+
+	"github.com/gorilla/mux"
+)
 
 // Items that the server need to connect
 type Config struct {
 	// Port where it is executed
-	Port int
+	Port string
 	// Secret key used to generate Tokens
 	JWTSecret string
 	// Database connection
@@ -27,4 +32,25 @@ type Broker struct {
 // Method that makes the broker a server interface
 func (b *Broker) Config() *Config {
 	return b.config
+}
+
+// Constructor of Server
+func NewServer(ctx context.Context, config *Config) (*Broker, error) {
+	// Validations
+	if config.Port == "" {
+		return nil, errors.New("port is required")
+	}
+	if config.JWTSecret == "" {
+		return nil, errors.New("secret is required")
+	}
+	if config.DatabaseUrl == "" {
+		return nil, errors.New("database url is required")
+	}
+
+	broker := &Broker{
+		config: config,
+		router: *mux.NewRouter(),
+	}
+
+	return broker, nil
 }
