@@ -23,3 +23,8 @@ type Broker struct {
 	// It defines the API route
 	router mux.Router
 }
+
+// Method that makes the broker a server interface
+func (b *Broker) Config() *Config {
+	return b.config
+}
