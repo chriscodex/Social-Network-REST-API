@@ -1,10 +1,12 @@
 package server
 
-// Items that the server will need to connect
+import "github.com/gorilla/mux"
+
+// Items that the server need to connect
 type Config struct {
-	// Port where it will be executed
+	// Port where it is executed
 	Port int
-	// Secret key that will be used to generate Tokens
+	// Secret key used to generate Tokens
 	JWTSecret string
 	// Database connection
 	DatabaseUrl string
@@ -13,4 +15,11 @@ type Config struct {
 // Interface to be considered a server
 type Server interface {
 	Config() *Config
+}
+
+// Element that will handle the server
+type Broker struct {
+	config *Config
+	// It defines the API route
+	router mux.Router
 }
