@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/ChrisCodeX/REST-API-Go/models"
+	_ "github.com/lib/pq"
 )
 
 type PostgresRepository struct {
