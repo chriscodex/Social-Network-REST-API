@@ -57,7 +57,7 @@ func NewServer(ctx context.Context, config *Config) (*Broker, error) {
 	return broker, nil
 }
 
-// Method that makes the server Broker able to start
+// Method that makes the server (Broker) able to start
 func (b *Broker) Start(binder func(s Server, r *mux.Router)) {
 	b.router = mux.NewRouter()
 	binder(b, b.router)
