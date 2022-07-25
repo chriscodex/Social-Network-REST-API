@@ -61,6 +61,30 @@ func (repo *PostgresRepository) GetUserById(ctx context.Context, id string) (*mo
 	return &user, nil
 }
 
+// Get user sending the Email
+func (repo *PostgresRepository) GetUserByEmail(ctx context.Context, email string) (*models.User, error) {
+	rows, err := repo.db.QueryContext(ctx, "SELECT id, email, password FROM users WHERE email = $1", email)
+
+	// Stop reading rows
+	defer func() {
+		err = rows.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	// Map column values of row into the user struct
+	var user = models.User{}
+
+	for rows.Next() {
+		if err = rows.Scan(&user.Id, &user.Email); err == nil {
+			return &user, nil
+		}
+	}
+
+	return &user, nil
+}
+
 // Function that closes the connection
 func (repo *PostgresRepository) Close() error {
 	return repo.db.Close()
