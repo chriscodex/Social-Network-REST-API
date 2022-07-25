@@ -61,7 +61,6 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 			Id:    user.Id,
 			Email: user.Email,
 		})
-
 		// Message on the server
 		log.Println("User registered successfully")
 	}
