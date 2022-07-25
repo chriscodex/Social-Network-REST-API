@@ -17,7 +17,7 @@ const (
 )
 
 // Items necessary for the registration of a user
-type SignUpRequest struct {
+type SignUpLoginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
@@ -31,7 +31,7 @@ type SignUpResponse struct {
 // Register Handler Function
 func SignUpHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var request = SignUpRequest{}
+		var request = SignUpLoginRequest{}
 
 		// Decode the request into the request struct
 		err := json.NewDecoder(r.Body).Decode(&request)
@@ -76,5 +76,11 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 		})
 		// Message on the server
 		log.Println("User registered successfully")
+	}
+}
+
+func LoginHandler(s server.Server) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
 	}
 }
