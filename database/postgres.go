@@ -24,11 +24,20 @@ func NewPostgresRepository(url string) (*PostgresRepository, error) {
 
 // Methods that makes PostgresRepository a User Repository
 
+/* Insert a User
+* @param {context} ctx context
+
+* @param {*models.User} user struct that will be inserted in postgres database
+
+* @return {error} If the insert fails, returns an error
+ */
 func (repo *PostgresRepository) InsertUser(ctx context.Context, user *models.User) error {
+	// Insertion
 	_, err := repo.db.ExecContext(ctx, "INSERT INTO users (id, email, password) VALUES ($1, $2, $3)", user.Id, user.Email, user.Password)
 	return err
 }
 
+// Get user sending a ID
 func (repo *PostgresRepository) GetUserById(ctx context.Context, id string) (*models.User, error) {
 	rows, err := repo.db.QueryContext(ctx, "SELECT id, email FROM users WHERE id = $1", id)
 
@@ -40,9 +49,9 @@ func (repo *PostgresRepository) GetUserById(ctx context.Context, id string) (*mo
 		}
 	}()
 
+	// Map column values of row into the user struct
 	var user = models.User{}
 
-	// Map column values of row into the user struct
 	for rows.Next() {
 		if err = rows.Scan(&user.Id, &user.Email); err == nil {
 			return &user, nil
