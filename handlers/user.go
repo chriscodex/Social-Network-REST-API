@@ -152,7 +152,7 @@ func MeHandler(s server.Server) http.HandlerFunc {
 		tokenString := strings.TrimSpace(r.Header.Get("Authorization"))
 
 		// Check the validation of the token
-		token, err := jwt.ParseWithClaims(tokenString, models.AppClaims{}, func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.ParseWithClaims(tokenString, &models.AppClaims{}, func(token *jwt.Token) (interface{}, error) {
 			return []byte(s.Config().JWTSecret), nil
 		})
 		if err != nil {
