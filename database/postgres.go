@@ -57,6 +57,9 @@ func (repo *PostgresRepository) GetUserById(ctx context.Context, id string) (*mo
 			return &user, nil
 		}
 	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
 
 	return &user, nil
 }
@@ -80,6 +83,10 @@ func (repo *PostgresRepository) GetUserByEmail(ctx context.Context, email string
 		if err = rows.Scan(&user.Id, &user.Email, &user.Password); err == nil {
 			return &user, nil
 		}
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
 	}
 
 	return &user, nil
