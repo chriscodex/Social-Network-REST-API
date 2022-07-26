@@ -47,6 +47,12 @@ Binder of endpoints
 @ param {Router} Route Handler
 */
 func BindRoutes(s server.Server, r *mux.Router) {
+	// Endpoint "/"
 	r.HandleFunc("/", handlers.HomeHandler(s)).Methods(http.MethodGet)
+
+	// Endpoint "/signup"
 	r.HandleFunc("/signup", handlers.SignUpHandler(s)).Methods(http.MethodPost)
+
+	// Endpoint "/login"
+	r.HandleFunc("/login", handlers.LoginHandler(s)).Methods(http.MethodPost)
 }
