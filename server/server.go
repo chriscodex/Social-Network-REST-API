@@ -13,12 +13,9 @@ import (
 
 // Items that the server need to connect
 type Config struct {
-	// Port where it is executed
-	Port string
-	// Secret key used to generate Tokens
-	JWTSecret string
-	// Database connection
-	DatabaseUrl string
+	Port        string // Port where it is executed
+	JWTSecret   string // Secret key used to generate Tokens
+	DatabaseUrl string // Database connection
 }
 
 // Interface to be considered a server
@@ -29,8 +26,7 @@ type Server interface {
 // Element that will handle the server
 type Broker struct {
 	config *Config
-	// It defines the API route
-	router *mux.Router
+	router *mux.Router // It defines the API route
 }
 
 // Method that makes the broker a server interface
