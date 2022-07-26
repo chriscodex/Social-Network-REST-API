@@ -88,11 +88,12 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 
 func LoginHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Decode the request into the request struct
+		// Decode the json request into the request struct
 		var request = SignUpLoginRequest{}
 
 		err := json.NewDecoder(r.Body).Decode(&request)
 
+		// Client error
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -114,6 +115,7 @@ func LoginHandler(s server.Server) http.HandlerFunc {
 		// It response the same error for security
 		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
 			http.Error(w, "invalid credentials", http.StatusUnauthorized)
+			log.Printf("failed to compare hash and password: %s", err)
 			return
 		}
 
@@ -131,6 +133,7 @@ func LoginHandler(s server.Server) http.HandlerFunc {
 		tokenString, err := token.SignedString([]byte(s.Config().JWTSecret))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Printf("failed to sign the token: %s", err)
 			return
 		}
 
