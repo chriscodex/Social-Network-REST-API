@@ -4,16 +4,19 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/ChrisCodeX/REST-API-Go/models"
 	"github.com/ChrisCodeX/REST-API-Go/repository"
 	"github.com/ChrisCodeX/REST-API-Go/server"
+	"github.com/golang-jwt/jwt"
 	"github.com/segmentio/ksuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 const (
-	HASH_COST = 8
+	HASH_COST             = 8
+	TOKEN_TIME_EXPIRATION = 2 * time.Hour * 24
 )
 
 // Items necessary for the registration of a user
@@ -22,18 +25,22 @@ type SignUpLoginRequest struct {
 	Password string `json:"password"`
 }
 
-// Response
+// Response to the client on Signup
 type SignUpResponse struct {
 	Id    string `json:"id"`
 	Email string `json:"email"`
 }
 
+// Response to the client on Login
+type LoginResponse struct {
+	Token string `json:"token"`
+}
+
 // Register Handler Function
 func SignUpHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var request = SignUpLoginRequest{}
-
 		// Decode the request into the request struct
+		var request = SignUpLoginRequest{}
 		err := json.NewDecoder(r.Body).Decode(&request)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
@@ -81,6 +88,56 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 
 func LoginHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// Decode the request into the request struct
+		var request = SignUpLoginRequest{}
 
+		err := json.NewDecoder(r.Body).Decode(&request)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		// Send the email to get the user
+		user, err := repository.GetUserByEmail(r.Context(), request.Email)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if user == nil {
+			http.Error(w, "invalid credentials", http.StatusUnauthorized)
+			return
+		}
+
+		// It response the same error for security
+		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
+			http.Error(w, "invalid credentials", http.StatusUnauthorized)
+			return
+		}
+
+		claims := models.AppClaims{
+			UserId: user.Id,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: time.Now().Add(TOKEN_TIME_EXPIRATION).Unix(),
+			},
+		}
+
+		// Generate the token
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+		// Sign the token
+		tokenString, err := token.SignedString([]byte(s.Config().JWTSecret))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// Response to the client
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(LoginResponse{
+			Token: tokenString,
+		})
 	}
 }
