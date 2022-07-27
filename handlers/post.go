@@ -7,6 +7,7 @@ import (
 	"github.com/ChrisCodeX/REST-API-Go/models"
 	"github.com/ChrisCodeX/REST-API-Go/repository"
 	"github.com/ChrisCodeX/REST-API-Go/server"
+	"github.com/gorilla/mux"
 	"github.com/segmentio/ksuid"
 )
 
@@ -74,5 +75,23 @@ func InsertPostHandler(s server.Server) http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+	}
+}
+
+func GetPostByIdHandler(s server.Server) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Get the path parameter {id}
+		params := mux.Vars(r)
+
+		post, err := repository.GetPostById(r.Context(), params["id"])
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// Response to the client
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(post)
 	}
 }

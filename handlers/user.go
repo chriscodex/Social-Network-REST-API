@@ -73,7 +73,7 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 		// Validate if user is already registered
 		err = repository.ValidateUserAlreadyRegistered(r.Context(), &user)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 

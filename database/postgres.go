@@ -23,7 +23,10 @@ func NewPostgresRepository(url string) (*PostgresRepository, error) {
 	return &PostgresRepository{db}, nil
 }
 
-// Validate User Already Registered in Database
+// Methods that makes PostgresRepository a Repository
+// Table User Operations
+
+/* Validate User Already Registered in Database */
 func (repo *PostgresRepository) ValidateUserAlreadyRegistered(ctx context.Context, user *models.User) error {
 	//Validation (Email already registered)
 	// Query
@@ -43,9 +46,6 @@ func (repo *PostgresRepository) ValidateUserAlreadyRegistered(ctx context.Contex
 	}
 	return nil
 }
-
-// Methods that makes PostgresRepository a Repository
-// Table User Operations
 
 /* Insert a User
 * @param {context} ctx context
@@ -129,6 +129,33 @@ func (repo *PostgresRepository) InsertPost(ctx context.Context, post *models.Pos
 	_, err := repo.db.ExecContext(ctx, "INSERT INTO posts (id, post_content, user_id) VALUES ($1, $2, $3)",
 		post.Id, post.PostContent, post.UserId)
 	return err
+}
+
+// Get user sending an ID
+func (repo *PostgresRepository) GetPostById(ctx context.Context, id string) (*models.Post, error) {
+	rows, err := repo.db.QueryContext(ctx, "SELECT id, post_content, created_at, user_id FROM posts WHERE id = $1", id)
+
+	// Stop reading rows
+	defer func() {
+		err = rows.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	// Map column values of row into the post struct
+	var post = models.Post{}
+
+	for rows.Next() {
+		if err = rows.Scan(&post.Id, &post.PostContent, &post.CreatedAt, &post.UserId); err == nil {
+			return &post, nil
+		}
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return &post, nil
 }
 
 // Function that closes the connection
