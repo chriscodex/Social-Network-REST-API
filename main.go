@@ -48,7 +48,7 @@ Binder of endpoints
 @ param {Router} Route Handler
 */
 func BindRoutes(s server.Server, r *mux.Router) {
-	// Using the middleware
+	// Assigning Middleware
 	r.Use(middleware.CheckAuthMiddleware(s))
 
 	// Endpoint "/"
@@ -63,9 +63,20 @@ func BindRoutes(s server.Server, r *mux.Router) {
 	// Endpoint "/me"
 	r.HandleFunc("/me", handlers.MeHandler(s)).Methods(http.MethodGet)
 
-	// Endpoint "/post"
+	/* Endpoints "/post" */
+	// Create New Post
 	r.HandleFunc("/posts", handlers.InsertPostHandler(s)).Methods(http.MethodPost)
+
+	// Get a Post By Id
 	r.HandleFunc("/posts/{id}", handlers.GetPostByIdHandler(s)).Methods(http.MethodGet)
+
+	// Update a Post By Id
 	r.HandleFunc("/posts/{id}", handlers.UpdatePostHandler(s)).Methods(http.MethodPut)
+
+	// Delete a Post By Id
 	r.HandleFunc("/posts/{id}", handlers.DeletePostHandler(s)).Methods(http.MethodDelete)
+
+	// Get All Posts
+	// This endpoint can receive 2 query parameter: page & size
+	r.HandleFunc("/posts", handlers.ListPostHandler(s)).Methods(http.MethodGet)
 }

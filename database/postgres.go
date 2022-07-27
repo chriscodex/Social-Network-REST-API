@@ -168,3 +168,29 @@ func (repo *PostgresRepository) DeletePost(ctx context.Context, id string, userI
 		id, userId)
 	return err
 }
+
+func (repo *PostgresRepository) ListPost(ctx context.Context, page uint64, size uint64) ([]*models.Post, error) {
+	// Query
+	rows, err := repo.db.QueryContext(ctx, "SELECT id, post_content, user_id, created_at FROM posts LIMIT $1 OFFSET ($2-1)", size, page*size)
+	if err != nil {
+		return nil, err
+	}
+
+	// Stop Reading Rows
+	defer CloseReadingRows(rows)
+
+	// Add post into the slice
+	var posts []*models.Post
+	for rows.Next() {
+		var post = models.Post{}
+		if err = rows.Scan(&post.Id, &post.PostContent, &post.UserId, &post.CreatedAt); err == nil {
+			posts = append(posts, &post)
+		}
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return posts, nil
+}

@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/ChrisCodeX/REST-API-Go/models"
 	"github.com/ChrisCodeX/REST-API-Go/repository"
@@ -153,7 +154,7 @@ func UpdatePostHandler(s server.Server) http.HandlerFunc {
 
 func DeletePostHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// // Get the token from Authorization header
+		// Get the token from Authorization header
 		token, err := GetTokenAuthorizationHeader(s, w, r)
 
 		if err != nil {
@@ -183,5 +184,49 @@ func DeletePostHandler(s server.Server) http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+	}
+}
+
+func ListPostHandler(s server.Server) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var err error
+
+		// Read Query Parameter page
+		pageStr := r.URL.Query().Get("page")
+
+		var page = uint64(0)
+
+		if pageStr != "" {
+			page, err = strconv.ParseUint(pageStr, 10, 64)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+		}
+
+		// Read Query Parameter size
+		sizeStr := r.URL.Query().Get("size")
+
+		var size = uint64(2)
+
+		if sizeStr != "" {
+			size, err = strconv.ParseUint(sizeStr, 10, 64)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+		}
+
+		// Get the posts from database
+		posts, err := repository.ListPost(r.Context(), page, size)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// Response to the client
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(posts)
 	}
 }

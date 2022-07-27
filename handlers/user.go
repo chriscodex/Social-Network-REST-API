@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/ChrisCodeX/REST-API-Go/models"
@@ -157,12 +156,8 @@ func LoginHandler(s server.Server) http.HandlerFunc {
 func MeHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Get the token from Authorization header
-		tokenString := strings.TrimSpace(r.Header.Get("Authorization"))
+		token, err := GetTokenAuthorizationHeader(s, w, r)
 
-		// Check the validation of the token
-		token, err := jwt.ParseWithClaims(tokenString, &models.AppClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte(s.Config().JWTSecret), nil
-		})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
