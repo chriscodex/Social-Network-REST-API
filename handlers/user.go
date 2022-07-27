@@ -20,6 +20,7 @@ const (
 	TOKEN_TIME_EXPIRATION = 2 * time.Hour * 24
 )
 
+// Receive from the client
 // Items necessary for the registration of a user
 type SignUpLoginRequest struct {
 	Email    string `json:"email"`
@@ -160,7 +161,7 @@ func MeHandler(s server.Server) http.HandlerFunc {
 			return
 		}
 
-		// Validation of the token
+		// Validation of the user
 		if claims, ok := token.Claims.(*models.AppClaims); ok && token.Valid {
 			user, err := repository.GetUserById(r.Context(), claims.UserId)
 			if err != nil {
