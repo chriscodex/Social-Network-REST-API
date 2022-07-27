@@ -3,12 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"strings"
 
 	"github.com/ChrisCodeX/REST-API-Go/models"
 	"github.com/ChrisCodeX/REST-API-Go/repository"
 	"github.com/ChrisCodeX/REST-API-Go/server"
-	"github.com/golang-jwt/jwt"
 	"github.com/segmentio/ksuid"
 )
 
@@ -25,19 +23,15 @@ type PostResponse struct {
 
 func InsertPostHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Get the token from Authorization header
-		tokenString := strings.TrimSpace(r.Header.Get("Authorization"))
+		// // Get the token from Authorization header
+		token, err := GetTokenAuthorizationHeader(s, w, r)
 
-		// Check the validation of the token
-		token, err := jwt.ParseWithClaims(tokenString, &models.AppClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte(s.Config().JWTSecret), nil
-		})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
 
-		// Validation of the user
+		// Validation of the user with token
 		if claims, ok := token.Claims.(*models.AppClaims); ok && token.Valid {
 			// Decode json into into the struct
 			var postRequest = InsertPostRequest{}
