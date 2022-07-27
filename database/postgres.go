@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 
 	"github.com/ChrisCodeX/REST-API-Go/models"
 	_ "github.com/lib/pq"
@@ -12,6 +11,11 @@ import (
 
 type PostgresRepository struct {
 	db *sql.DB
+}
+
+// Function that closes the connection
+func (repo *PostgresRepository) Close() error {
+	return repo.db.Close()
 }
 
 // Constructor of Postgres Repository
@@ -31,14 +35,12 @@ func (repo *PostgresRepository) ValidateUserAlreadyRegistered(ctx context.Contex
 	//Validation (Email already registered)
 	// Query
 	rows, err := repo.db.QueryContext(ctx, "SELECT id FROM users WHERE email = $1", user.Email)
+	if err != nil {
+		return err
+	}
 
 	// Stop reading rows
-	defer func() {
-		err = rows.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	defer CloseReadingRows(rows)
 
 	// Validate
 	if rows.Next() {
@@ -63,14 +65,12 @@ func (repo *PostgresRepository) InsertUser(ctx context.Context, user *models.Use
 // Get user sending an ID
 func (repo *PostgresRepository) GetUserById(ctx context.Context, id string) (*models.User, error) {
 	rows, err := repo.db.QueryContext(ctx, "SELECT id, email FROM users WHERE id = $1", id)
+	if err != nil {
+		return nil, err
+	}
 
 	// Stop reading rows
-	defer func() {
-		err = rows.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	defer CloseReadingRows(rows)
 
 	// Map column values of row into the user struct
 	var user = models.User{}
@@ -91,13 +91,12 @@ func (repo *PostgresRepository) GetUserById(ctx context.Context, id string) (*mo
 func (repo *PostgresRepository) GetUserByEmail(ctx context.Context, email string) (*models.User, error) {
 	rows, err := repo.db.QueryContext(ctx, "SELECT id, email, password FROM users WHERE email = $1", email)
 
+	if err != nil {
+		return nil, err
+	}
+
 	// Stop reading rows
-	defer func() {
-		err = rows.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	defer CloseReadingRows(rows)
 
 	// Map column values of row into the user struct
 	var user = models.User{}
@@ -133,15 +132,15 @@ func (repo *PostgresRepository) InsertPost(ctx context.Context, post *models.Pos
 
 // Get user sending an ID
 func (repo *PostgresRepository) GetPostById(ctx context.Context, id string) (*models.Post, error) {
+
+	// Query
 	rows, err := repo.db.QueryContext(ctx, "SELECT id, post_content, created_at, user_id FROM posts WHERE id = $1", id)
+	if err != nil {
+		return nil, err
+	}
 
 	// Stop reading rows
-	defer func() {
-		err = rows.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	defer CloseReadingRows(rows)
 
 	// Map column values of row into the post struct
 	var post = models.Post{}
@@ -158,7 +157,8 @@ func (repo *PostgresRepository) GetPostById(ctx context.Context, id string) (*mo
 	return &post, nil
 }
 
-// Function that closes the connection
-func (repo *PostgresRepository) Close() error {
-	return repo.db.Close()
+func (repo *PostgresRepository) UpdatePost(ctx context.Context, post *models.Post) error {
+	_, err := repo.db.ExecContext(ctx, "UPDATE posts SET post_content = $1 WHERE id = $2 and user_id = $3",
+		post.PostContent, post.Id, post.UserId)
+	return err
 }

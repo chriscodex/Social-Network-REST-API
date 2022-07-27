@@ -11,15 +11,20 @@ import (
 	"github.com/segmentio/ksuid"
 )
 
-// Receive from the client
-type InsertPostRequest struct {
+// Receive from the client (Insert and Update)
+type UpsertPostRequest struct {
 	PostContent string `json:"post_content"`
 }
 
-// Response to the client
+// Response to the client to Insert a Post
 type PostResponse struct {
 	Id          string `json:"id"`
 	PostContent string `json:"post_content"`
+}
+
+// Response to the client to Update a Post
+type PostUpdateResponse struct {
+	Message string `json:"message"`
 }
 
 func InsertPostHandler(s server.Server) http.HandlerFunc {
@@ -35,7 +40,7 @@ func InsertPostHandler(s server.Server) http.HandlerFunc {
 		// Validation of the user with token
 		if claims, ok := token.Claims.(*models.AppClaims); ok && token.Valid {
 			// Decode json into into the struct
-			var postRequest = InsertPostRequest{}
+			var postRequest = UpsertPostRequest{}
 
 			if err := json.NewDecoder(r.Body).Decode(&postRequest); err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -93,5 +98,55 @@ func GetPostByIdHandler(s server.Server) http.HandlerFunc {
 		// Response to the client
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(post)
+	}
+}
+
+func UpdatePostHandler(s server.Server) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// // Get the token from Authorization header
+		token, err := GetTokenAuthorizationHeader(s, w, r)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+
+		// Validation of the user with token
+		if claims, ok := token.Claims.(*models.AppClaims); ok && token.Valid {
+			// Decode json into into the UpsertPostRequest struct
+			var postRequest = UpsertPostRequest{}
+
+			if err := json.NewDecoder(r.Body).Decode(&postRequest); err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+
+			// Get id
+			params := mux.Vars(r)
+
+			post := models.Post{
+				Id:          params["id"],
+				PostContent: postRequest.PostContent,
+				UserId:      claims.UserId,
+			}
+
+			// Insert the post into the database
+			err = repository.UpdatePost(r.Context(), &post)
+
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			// Response to the client
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(PostUpdateResponse{
+				Message: "Post Updated",
+			})
+
+		} else {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 }
