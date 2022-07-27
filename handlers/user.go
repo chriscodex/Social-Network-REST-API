@@ -70,6 +70,13 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 			Id:       id.String(),
 		}
 
+		// Validate if user is already registered
+		err = repository.ValidateUserAlreadyRegistered(r.Context(), &user)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
 		// Send the struct to be stored in the database
 		err = repository.InsertUser(r.Context(), &user)
 		if err != nil {

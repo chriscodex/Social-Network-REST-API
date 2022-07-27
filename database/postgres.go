@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 
 	"github.com/ChrisCodeX/REST-API-Go/models"
@@ -22,6 +23,27 @@ func NewPostgresRepository(url string) (*PostgresRepository, error) {
 	return &PostgresRepository{db}, nil
 }
 
+// Validate User Already Registered in Database
+func (repo *PostgresRepository) ValidateUserAlreadyRegistered(ctx context.Context, user *models.User) error {
+	//Validation (Email already registered)
+	// Query
+	rows, err := repo.db.QueryContext(ctx, "SELECT id FROM users WHERE email = $1", user.Email)
+
+	// Stop reading rows
+	defer func() {
+		err = rows.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	// Validate
+	if rows.Next() {
+		return fmt.Errorf("email is already registered")
+	}
+	return nil
+}
+
 // Methods that makes PostgresRepository a Repository
 // Table User Operations
 
@@ -33,13 +55,7 @@ func NewPostgresRepository(url string) (*PostgresRepository, error) {
 * @return {error} If the insert fails, returns an error
  */
 func (repo *PostgresRepository) InsertUser(ctx context.Context, user *models.User) error {
-	// Validation
-	// Email repeted
-	// rows, err := repo.db.QueryContext(ctx, "SELECT id FROM users WHERE email = $1", user.Email)
-	// if rows.Next() {
-	// 	return fmt.Errorf("email is already registered")
-	// }
-	// Insertion
+	/* Insertion */
 	_, err := repo.db.ExecContext(ctx, "INSERT INTO users (id, email, password) VALUES ($1, $2, $3)", user.Id, user.Email, user.Password)
 	return err
 }

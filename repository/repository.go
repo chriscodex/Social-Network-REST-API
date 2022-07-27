@@ -8,6 +8,7 @@ import (
 
 type Repository interface {
 	// Table User
+	ValidateUserAlreadyRegistered(ctx context.Context, user *models.User) error
 	InsertUser(ctx context.Context, user *models.User) error
 	GetUserById(ctx context.Context, id string) (*models.User, error)
 	GetUserByEmail(ctx context.Context, email string) (*models.User, error)
@@ -26,6 +27,10 @@ func SetRepository(repository Repository) {
 }
 
 // Table User Operations
+
+func ValidateUserAlreadyRegistered(ctx context.Context, user *models.User) error {
+	return implementation.ValidateUserAlreadyRegistered(ctx, user)
+}
 
 func InsertUser(ctx context.Context, user *models.User) error {
 	return implementation.InsertUser(ctx, user)
