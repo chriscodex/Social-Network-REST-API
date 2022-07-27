@@ -150,3 +150,38 @@ func UpdatePostHandler(s server.Server) http.HandlerFunc {
 		}
 	}
 }
+
+func DeletePostHandler(s server.Server) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// // Get the token from Authorization header
+		token, err := GetTokenAuthorizationHeader(s, w, r)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+
+		// Validation of the user with token
+		if claims, ok := token.Claims.(*models.AppClaims); ok && token.Valid {
+			params := mux.Vars(r)
+
+			// Delete the post from the database
+			err = repository.DeletePost(r.Context(), params["id"], claims.UserId)
+
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			// Response to the client
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(PostUpdateResponse{
+				Message: "Post deleted",
+			})
+
+		} else {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+}
