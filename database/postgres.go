@@ -22,22 +22,29 @@ func NewPostgresRepository(url string) (*PostgresRepository, error) {
 	return &PostgresRepository{db}, nil
 }
 
-// Methods that makes PostgresRepository a User Repository
+// Methods that makes PostgresRepository a Repository
+// Table User Operations
 
 /* Insert a User
 * @param {context} ctx context
 
-* @param {*models.User} user struct that will be inserted in postgres database
+* @param {*models.User} user struct that will be inserted in the database
 
 * @return {error} If the insert fails, returns an error
  */
 func (repo *PostgresRepository) InsertUser(ctx context.Context, user *models.User) error {
+	// Validation
+	// Email repeted
+	// rows, err := repo.db.QueryContext(ctx, "SELECT id FROM users WHERE email = $1", user.Email)
+	// if rows.Next() {
+	// 	return fmt.Errorf("email is already registered")
+	// }
 	// Insertion
 	_, err := repo.db.ExecContext(ctx, "INSERT INTO users (id, email, password) VALUES ($1, $2, $3)", user.Id, user.Email, user.Password)
 	return err
 }
 
-// Get user sending a ID
+// Get user sending an ID
 func (repo *PostgresRepository) GetUserById(ctx context.Context, id string) (*models.User, error) {
 	rows, err := repo.db.QueryContext(ctx, "SELECT id, email FROM users WHERE id = $1", id)
 
@@ -90,6 +97,22 @@ func (repo *PostgresRepository) GetUserByEmail(ctx context.Context, email string
 	}
 
 	return &user, nil
+}
+
+// Table Posts Operations
+
+/* Insert a Post
+* @param {context} ctx context
+
+* @param {*models.Post} post struct that will be inserted in the database
+
+* @return {error} If the insert fails, returns an error
+ */
+func (repo *PostgresRepository) InsertPost(ctx context.Context, post *models.Post) error {
+	// Insertion
+	_, err := repo.db.ExecContext(ctx, "INSERT INTO posts (id, post_content, user_id) VALUES ($1, $2, $3)",
+		post.Id, post.PostContent, post.UserId)
+	return err
 }
 
 // Function that closes the connection
