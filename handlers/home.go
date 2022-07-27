@@ -9,8 +9,8 @@ import (
 
 // Struct that is returned to the client
 type HomeResponse struct {
-	Message string `json: "message"`
-	Status  bool   `json: "status"`
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
 }
 
 /*
