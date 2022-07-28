@@ -18,3 +18,12 @@ type Hub struct {
 	unregister chan *Client
 	mutex      *sync.Mutex
 }
+
+func NewHub() *Hub {
+	return &Hub{
+		clients:    make([]*Client, 0),
+		register:   make(chan *Client),
+		unregister: make(chan *Client),
+		mutex:      &sync.Mutex{},
+	}
+}
