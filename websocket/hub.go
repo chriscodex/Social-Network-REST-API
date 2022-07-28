@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"log"
 	"net/http"
 	"sync"
 
@@ -28,4 +29,16 @@ func NewHub() *Hub {
 		unregister: make(chan *Client),
 		mutex:      &sync.Mutex{},
 	}
+}
+
+// Route of Websockets
+func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
+	// Upgrade connection
+	socket, err := upgrader.Upgrade(w, r, nil)
+
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
+	}
+
 }
