@@ -8,3 +8,12 @@ type Client struct {
 	socket   *websocket.Conn
 	outbound chan []byte
 }
+
+// Constructor of Client
+func NewClient(hub *Hub, socket *websocket.Conn) *Client {
+	return &Client{
+		hub:      hub,
+		socket:   socket,
+		outbound: make(chan []byte),
+	}
+}
