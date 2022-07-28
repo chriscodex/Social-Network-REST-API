@@ -17,3 +17,17 @@ func NewClient(hub *Hub, socket *websocket.Conn) *Client {
 		outbound: make(chan []byte),
 	}
 }
+
+// Function that write messages to websocket
+func (c *Client) Write() {
+	for {
+		select {
+		case message, ok := <-c.outbound:
+			if !ok {
+				c.socket.WriteMessage(websocket.CloseMessage, []byte{})
+				return
+			}
+			c.socket.WriteMessage(websocket.TextMessage, message)
+		}
+	}
+}
