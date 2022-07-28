@@ -47,5 +47,5 @@ func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	hub.register <- client
 
 	// GoRoutine wich send messages to registered clients
-
+	go client.Write()
 }
