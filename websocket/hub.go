@@ -41,4 +41,11 @@ func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
 	}
 
+	// Create New Client
+	client := NewClient(hub, socket)
+
+	hub.register <- client
+
+	// GoRoutine wich send messages to registered clients
+
 }
