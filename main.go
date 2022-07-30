@@ -52,7 +52,7 @@ func BindRoutes(s server.Server, r *mux.Router) {
 	// Creating Hub for upgrade to Websocket
 	hub := websocket.NewHub()
 
-	/* REST API */
+	/* HTTP */
 	// Assigning Middleware
 	r.Use(middleware.CheckAuthMiddleware(s))
 
@@ -85,7 +85,7 @@ func BindRoutes(s server.Server, r *mux.Router) {
 	// This endpoint can receive 2 query parameter: page & size
 	r.HandleFunc("/posts", handlers.ListPostHandler(s)).Methods(http.MethodGet)
 
-	/*Websocket endpoints*/
+	/*WebSocket endpoint*/
 	// Endpoint wich handle the websocket connection
 	r.HandleFunc("/ws", hub.HandleWebSocket)
 }

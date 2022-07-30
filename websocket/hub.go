@@ -49,3 +49,29 @@ func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	// GoRoutine wich send messages to registered clients
 	go client.Write()
 }
+
+//
+func (hub *Hub) onConnect(client *Client) {
+	// Console message
+	log.Println("Client connected", client.socket.RemoteAddr())
+
+	hub.mutex.Lock()
+	defer hub.mutex.Unlock()
+
+	// Assign id for client
+	client.id = client.socket.RemoteAddr().String()
+
+	// Add client to hub
+	hub.clients = append(hub.clients, client)
+}
+
+func (hub *Hub) Run() {
+	for {
+		select {
+		case client := <-hub.register:
+			hub.onConnect(client)
+		case client := <-hub.unregister:
+			hub.onDisconnect(client)
+		}
+	}
+}
