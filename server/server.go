@@ -59,7 +59,7 @@ func NewServer(ctx context.Context, config *Config) (*Broker, error) {
 	broker := &Broker{
 		config: config,
 		router: mux.NewRouter(),
-		hub:    websocket.NewHub(),
+		hub:    websocket.NewHub(), // Create Hub for upgrade to WebSocket
 	}
 
 	return broker, nil

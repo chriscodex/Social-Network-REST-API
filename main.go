@@ -9,7 +9,6 @@ import (
 	"github.com/ChrisCodeX/REST-API-Go/handlers"
 	"github.com/ChrisCodeX/REST-API-Go/middleware"
 	"github.com/ChrisCodeX/REST-API-Go/server"
-	"github.com/ChrisCodeX/REST-API-Go/websocket"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
@@ -49,9 +48,6 @@ Binder of endpoints
 @ param {Router} Route Handler
 */
 func BindRoutes(s server.Server, r *mux.Router) {
-	// Creating Hub for upgrade to Websocket
-	hub := websocket.NewHub()
-
 	/* HTTP */
 	// Assigning Middleware
 	r.Use(middleware.CheckAuthMiddleware(s))
@@ -87,5 +83,5 @@ func BindRoutes(s server.Server, r *mux.Router) {
 
 	/*WebSocket endpoint*/
 	// Endpoint wich handle the websocket connection
-	r.HandleFunc("/ws", hub.HandleWebSocket)
+	r.HandleFunc("/ws", s.Hub().HandleWebSocket)
 }
