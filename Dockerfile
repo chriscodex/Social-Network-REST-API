@@ -9,3 +9,6 @@ RUN go env -w GOPROXY=direct
 
 # Install git
 RUN apk add --no-cache git
+
+# Security certificates
+RUN apk --no-cache add ca-certificates && update-ca-certificates
