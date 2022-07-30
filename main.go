@@ -54,7 +54,7 @@ func BindRoutes(s server.Server, r *mux.Router) {
 
 	/* RESTfull (http) endpoints*/
 	// Assigning Middleware
-	r.Use(middleware.CheckAuthMiddleware(s))
+	api.Use(middleware.CheckAuthMiddleware(s))
 
 	// Endpoint "/"
 	r.HandleFunc("/", handlers.HomeHandler(s)).Methods(http.MethodGet)
@@ -66,20 +66,20 @@ func BindRoutes(s server.Server, r *mux.Router) {
 	r.HandleFunc("/login", handlers.LoginHandler(s)).Methods(http.MethodPost)
 
 	// Endpoint "/me"
-	r.HandleFunc("/me", handlers.MeHandler(s)).Methods(http.MethodGet)
+	api.HandleFunc("/me", handlers.MeHandler(s)).Methods(http.MethodGet)
 
 	/* Endpoints "/post" */
 	// Create New Post
-	r.HandleFunc("/posts", handlers.InsertPostHandler(s)).Methods(http.MethodPost)
+	api.HandleFunc("/posts", handlers.InsertPostHandler(s)).Methods(http.MethodPost)
 
 	// Get a Post By Id
 	r.HandleFunc("/posts/{id}", handlers.GetPostByIdHandler(s)).Methods(http.MethodGet)
 
 	// Update a Post By Id
-	r.HandleFunc("/posts/{id}", handlers.UpdatePostHandler(s)).Methods(http.MethodPut)
+	api.HandleFunc("/posts/{id}", handlers.UpdatePostHandler(s)).Methods(http.MethodPut)
 
 	// Delete a Post By Id
-	r.HandleFunc("/posts/{id}", handlers.DeletePostHandler(s)).Methods(http.MethodDelete)
+	api.HandleFunc("/posts/{id}", handlers.DeletePostHandler(s)).Methods(http.MethodDelete)
 
 	// Get All Posts
 	// This endpoint can receive 2 query parameter: page & size
