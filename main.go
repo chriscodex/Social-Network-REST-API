@@ -48,7 +48,11 @@ Binder of endpoints
 @ param {Router} Route Handler
 */
 func BindRoutes(s server.Server, r *mux.Router) {
-	/* HTTP */
+
+	//
+	api := r.PathPrefix("/api/v1").Subrouter()
+
+	/* RESTfull (http) endpoints*/
 	// Assigning Middleware
 	r.Use(middleware.CheckAuthMiddleware(s))
 

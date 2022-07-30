@@ -10,6 +10,7 @@ import (
 	"github.com/ChrisCodeX/REST-API-Go/repository"
 	"github.com/ChrisCodeX/REST-API-Go/websocket"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 // Items that the server need to connect
@@ -72,6 +73,9 @@ func (b *Broker) Start(binder func(s Server, r *mux.Router)) {
 
 	binder(b, b.router)
 
+	// Cors Handler
+	handler := cors.Default().Handler(b.router)
+
 	// Assign database
 	repo, err := database.NewPostgresRepository(b.config.DatabaseUrl)
 	if err != nil {
@@ -84,7 +88,7 @@ func (b *Broker) Start(binder func(s Server, r *mux.Router)) {
 
 	// Server started logs
 	log.Println("Server started on port", b.Config().Port)
-	if err := http.ListenAndServe(b.config.Port, b.router); err != nil {
+	if err := http.ListenAndServe(b.config.Port, handler); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
