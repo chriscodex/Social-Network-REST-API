@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 	"sync"
@@ -31,7 +32,7 @@ func NewHub() *Hub {
 	}
 }
 
-// Route of Websockets
+// WebSocket Handler
 func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	// Upgrade connection
 	socket, err := upgrader.Upgrade(w, r, nil)
@@ -41,7 +42,7 @@ func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
 	}
 
-	// Create New Client
+	// Register New Client to WebSocket
 	client := NewClient(hub, socket)
 
 	hub.register <- client
@@ -90,6 +91,7 @@ func (hub *Hub) onDisconnect(client *Client) {
 
 }
 
+// Run WebSocket
 func (hub *Hub) Run() {
 	for {
 		select {
@@ -97,6 +99,20 @@ func (hub *Hub) Run() {
 			hub.onConnect(client)
 		case client := <-hub.unregister:
 			hub.onDisconnect(client)
+		}
+	}
+}
+
+// Sent Messages Handler
+func (hub *Hub) Broadcast(message interface{}, ignore *Client) {
+
+	// Serialize the message
+	data, _ := json.Marshal(message)
+
+	// Send the message to all clients, ignoring the client who sends the data
+	for _, client := range hub.clients {
+		if client != ignore {
+			client.outbound <- data
 		}
 	}
 }
