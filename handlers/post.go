@@ -75,6 +75,7 @@ func InsertPostHandler(s server.Server) http.HandlerFunc {
 				Type:    "Post_Created",
 				Payload: post,
 			}
+			s.Hub().Broadcast(postMessage, nil)
 
 			// Response to the client
 			w.Header().Set("Content-Type", "application/json")
