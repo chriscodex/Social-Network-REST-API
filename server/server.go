@@ -8,6 +8,7 @@ import (
 
 	"github.com/ChrisCodeX/REST-API-Go/database"
 	"github.com/ChrisCodeX/REST-API-Go/repository"
+	"github.com/ChrisCodeX/REST-API-Go/websocket"
 	"github.com/gorilla/mux"
 )
 
@@ -21,18 +22,22 @@ type Config struct {
 // Interface to be considered a server
 type Server interface {
 	Config() *Config
+	Hub() *websocket.Hub
 }
 
 // Element that will handle the server
 type Broker struct {
 	config *Config
-	router *mux.Router // It defines the API route
+	router *mux.Router    // It defines the API route
+	hub    *websocket.Hub // Hub for websocket
 }
 
 // Method that makes the broker a server interface
 func (b *Broker) Config() *Config {
 	return b.config
 }
+
+//
 
 // Constructor of Server
 func NewServer(ctx context.Context, config *Config) (*Broker, error) {
