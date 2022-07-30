@@ -70,6 +70,12 @@ func InsertPostHandler(s server.Server) http.HandlerFunc {
 				return
 			}
 
+			// Websocket
+			var postMessage = models.WebsocketMessage{
+				Type:    "Post_Created",
+				Payload: post,
+			}
+
 			// Response to the client
 			w.Header().Set("Content-Type", "application/json")
 			json.NewEncoder(w).Encode(PostResponse{
