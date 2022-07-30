@@ -36,3 +36,11 @@ FROM scratch as runner
 # Copy the certificates
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
+# Copy .env file
+COPY .env ./
+
+# Copy the executable
+COPY --from=builder /REST-API-WebSocket /REST-API-WebSocket
+
+# Expose the port 5050
+EXPOSE 5050
