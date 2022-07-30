@@ -6,3 +6,6 @@ FROM golang:${GO_VERSION}-alpine AS builder
 
 # Environment variable
 RUN go env -w GOPROXY=direct
+
+# Install git
+RUN apk add --no-cache git
