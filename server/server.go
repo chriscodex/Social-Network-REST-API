@@ -32,12 +32,16 @@ type Broker struct {
 	hub    *websocket.Hub // Hub for websocket
 }
 
-// Method that makes the broker a server interface
+/* Method that makes the broker a server interface */
+// Server Configuration
 func (b *Broker) Config() *Config {
 	return b.config
 }
 
-//
+// Websocket Hub
+func (b *Broker) Hub() *websocket.Hub {
+	return b.hub
+}
 
 // Constructor of Server
 func NewServer(ctx context.Context, config *Config) (*Broker, error) {
@@ -55,6 +59,7 @@ func NewServer(ctx context.Context, config *Config) (*Broker, error) {
 	broker := &Broker{
 		config: config,
 		router: mux.NewRouter(),
+		hub:    websocket.NewHub(),
 	}
 
 	return broker, nil
