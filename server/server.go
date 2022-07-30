@@ -79,6 +79,9 @@ func (b *Broker) Start(binder func(s Server, r *mux.Router)) {
 	}
 	repository.SetRepository(repo)
 
+	// Start WebSocket Connection
+	go b.hub.Run()
+
 	// Server started logs
 	log.Println("Server started on port", b.Config().Port)
 	if err := http.ListenAndServe(b.config.Port, b.router); err != nil {
