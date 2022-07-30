@@ -44,3 +44,6 @@ COPY --from=builder /REST-API-WebSocket /REST-API-WebSocket
 
 # Expose the port 5050
 EXPOSE 5050
+
+# Run the API executable
+ENTRYPOINT [ "/REST-API-WebSocket" ]
