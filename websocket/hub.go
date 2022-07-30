@@ -50,7 +50,7 @@ func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	go client.Write()
 }
 
-//
+// Connected Client Handler
 func (hub *Hub) onConnect(client *Client) {
 	// Console message
 	log.Println("Client connected", client.socket.RemoteAddr())
@@ -61,8 +61,33 @@ func (hub *Hub) onConnect(client *Client) {
 	// Assign id for client
 	client.id = client.socket.RemoteAddr().String()
 
-	// Add client to hub
+	// Add client to Hub
 	hub.clients = append(hub.clients, client)
+}
+
+// Disconnected Client Handler
+func (hub *Hub) onDisconnect(client *Client) {
+	// Console message
+	log.Println("Client disconnected", client.socket.RemoteAddr())
+
+	// Close the connection with the socket
+	client.socket.Close()
+
+	// Remove the client from the Hub by index in the slice
+	hub.mutex.Lock()
+	defer hub.mutex.Unlock()
+	i := -1
+	for j, cli := range hub.clients {
+		if cli.id == client.id {
+			i = j
+		}
+	}
+
+	// Algorythm to delete an element from slice
+	copy(hub.clients[i:], hub.clients[i+1:])
+	hub.clients[len(hub.clients)-1] = nil
+	hub.clients = hub.clients[:len(hub.clients)-1]
+
 }
 
 func (hub *Hub) Run() {
