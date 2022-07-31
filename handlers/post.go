@@ -30,7 +30,7 @@ type PostUpdateResponse struct {
 
 func InsertPostHandler(s server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// // Get the token from Authorization header
+		// Get the token from Authorization header
 		token, err := GetTokenAuthorizationHeader(s, w, r)
 
 		if err != nil {
