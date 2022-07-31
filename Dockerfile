@@ -26,3 +26,8 @@ RUN go mod download
 # Copy the rest of the files
 COPY [".","./"]
 
+# Build the aplication (We indicate to not use C++ compiler)
+RUN CGO_ENABLED=0 go build \
+    -installsuffix 'static' \
+    -o /REST-API-WebSocket
+
