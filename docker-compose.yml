@@ -6,3 +6,6 @@ services:
 
     ports:
       - "5050:5050"
+
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/postgres?sslmode=disable
