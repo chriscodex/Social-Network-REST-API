@@ -19,3 +19,6 @@ WORKDIR /src
 
 # Copy go.mod and go.sum into /src directory
 COPY ["./go.mod","./go.sum","./"]
+
+# Install dependencies
+RUN go mod download
