@@ -22,3 +22,7 @@ COPY ["./go.mod","./go.sum","./"]
 
 # Install dependencies
 RUN go mod download
+
+# Copy the rest of the files
+COPY [".","./"]
+
