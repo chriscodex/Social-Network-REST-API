@@ -1,3 +1,4 @@
+# API Service
 # Variable Go_Version
 ARG GO_VERSION=1.17
 
@@ -12,3 +13,9 @@ RUN apk add --no-cache git
 
 # Security certificates
 RUN apk --no-cache add ca-certificates && update-ca-certificates
+
+# Working directory
+WORKDIR /src
+
+# Copy go.mod and go.sum into /src directory
+COPY ["./go.mod","./go.sum","./"]
