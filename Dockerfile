@@ -31,3 +31,8 @@ RUN CGO_ENABLED=0 go build \
     -installsuffix 'static' \
     -o /REST-API-WebSocket
 
+FROM scratch as runner 
+
+# Copy the certificates
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
