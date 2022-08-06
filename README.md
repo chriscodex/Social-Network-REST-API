@@ -108,6 +108,9 @@ Allows the user to review their login details.
   ```  
   The password is not returned for security reasons.
   
+- **Create a New Post**
+
+
 ---  
 
 ## Built with 🛠️  
