@@ -112,6 +112,9 @@ Allows the user to review their login details.
 Allows users to create a new post
 
   `POST` `http://localhost:5050/api/posts`
+  
+  Header: `Authorization`  
+  Value: `Token`
 
 ---  
 
