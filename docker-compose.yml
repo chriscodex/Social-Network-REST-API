@@ -1,8 +1,9 @@
 version: "3.8"
 
 services:
-  app:
+  api:
     build: .
+    container_name: api
 
     ports:
       - "5050:5050"
@@ -13,5 +14,6 @@ services:
     depends_on:
       - db
 
-  db:
+  database:
     build: ./database
+    container_name: database

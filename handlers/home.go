@@ -29,7 +29,7 @@ func HomeHandler(s server.Server) http.HandlerFunc {
 		w.WriteHeader(http.StatusOK)
 		// Create the response
 		json.NewEncoder(w).Encode(HomeResponse{
-			Message: "Welcome the GO API",
+			Message: "Welcome to the Social Network API",
 			Status:  true,
 		})
 	}
