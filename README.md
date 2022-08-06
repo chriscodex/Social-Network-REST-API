@@ -109,7 +109,9 @@ Allows the user to review their login details.
   The password is not returned for security reasons.
   
 - **Create a New Post**
+Allows users to create a new post
 
+  `POST` `http://localhost:5050/api/posts`
 
 ---  
 
