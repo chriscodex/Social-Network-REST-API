@@ -16,10 +16,10 @@ Docker will allow you to launch the API service and connect it to the database.
 
 ## Instalation 🔧 
 - Once the project is cloned, go to the project directory and run this command:
-```
-docker compose up -d
-```  
-This command will start the API service and it will be ready to be consumed.
+  ```
+  docker compose up -d
+  ```  
+  This command will start the API service and it will be ready to be consumed.
 
 ---  
 
@@ -37,8 +37,8 @@ Shows a welcome message indicating that the connection has been made successfull
   Server Response:  
   ```
   { 
-      "message": "Welcome to the Social Network API", 
-      "status": true 
+    "message": "Welcome to the Social Network API", 
+    "status": true 
   }
   ```  
 - **Signup**  
@@ -50,8 +50,8 @@ Allows user registration.
 
   ```
   {
-      "email": "myemail@email.com",
-      "password": "mypassword"
+    "email": "myemail@email.com",
+    "password": "mypassword"
   }
   ```
 
@@ -59,8 +59,8 @@ Allows user registration.
 
   ```
   {
-      "id": "2D5cbOZMHKhGWQ7xv3sabFx8TxB",
-      "email": "myemail@email.com"
+    "id": "2D5cbOZMHKhGWQ7xv3sabFx8TxB",
+    "email": "myemail@email.com"
   }
   ```  
   The server responds with an unique ID for the registered email. If you try to register a new user with the same email, the server will respond with an error.  
@@ -74,8 +74,8 @@ Allows users to log in to the Social Network.
   
   ```
   {
-      "email": "myemail@email.com",
-      "password": "mypassword"
+    "email": "myemail@email.com",
+    "password": "mypassword"
   }
   ```  
   
@@ -83,7 +83,7 @@ Allows users to log in to the Social Network.
   
   ```
   {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyRDVjYk9aTUhLaEdXUTd4djNzYWJGeDhUeEIiLCJleHAiOjE2NjAxNjYwMDd9.xGjmePeDLXfOfnnDghphQIGtRyUU5TomPTFQmdf5ooE"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyRDVjYk9aTUhLaEdXUTd4djNzYWJGeDhUeEIiLCJleHAiOjE2NjAxNjYwMDd9.xGjmePeDLXfOfnnDghphQIGtRyUU5TomPTFQmdf5ooE"
   }
   ```
 
@@ -101,9 +101,9 @@ Allows the user to review their login details.
   Server Response:
   ```
   {
-      "id": "2D5cbOZMHKhGWQ7xv3sabFx8TxB",
-      "email": "myemail@email.com",
-      "password": ""
+    "id": "2D5cbOZMHKhGWQ7xv3sabFx8TxB",
+    "email": "myemail@email.com",
+    "password": ""
   }
   ```  
   The password is not returned for security reasons.
@@ -115,6 +115,13 @@ Allows users to create a new post
   
   Header: `Authorization`  
   Value: `Token`
+
+  Client Request:
+  ```
+  {
+    "post_content": "Hello Everybody, this is my first post"
+  }
+  ```
 
 ---  
 
