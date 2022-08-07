@@ -119,9 +119,18 @@ Allows users to create a new post
   Client Request:
   ```
   {
-    "post_content": "Hello Everybody, this is my first post"
+    "post_content": "Hello everybody, this is my first post"
   }
   ```
+
+  Server Response:
+  ```
+  {
+    "id": "2D5sk2VQz4UhYrRX3GENhq1yAVV",
+    "post_content": "Hello everybody, this is my first post"
+  }
+  ```
+  The server responds with an unique ID for the post created
 
 ---  
 
