@@ -130,7 +130,29 @@ Allows users to create a new post
     "post_content": "Hello everybody, this is my first post"
   }
   ```
-  The server responds with an unique ID for the post created
+  The server responds with an unique id for the post created
+
+- **Update a Post**  
+Allows a user to update their post by the post id as a path parameter.
+
+  `PUT` `http://localhost:5050/api/posts/{post_id}`
+  
+  Header: `Authorization`  
+  Value: `Token`
+
+  Client Request:  
+  ```
+  {
+    "post_content": "Hello everybody, this is my updated post"
+  }
+  ```
+
+  Server Response:
+  ```
+  {
+    "message": "Post Updated"
+  }
+  ```
 
 ---  
 
