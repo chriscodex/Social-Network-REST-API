@@ -9,10 +9,10 @@ services:
       - "5050:5050"
 
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/postgres?sslmode=disable
+      DATABASE_URL: postgres://postgres:postgres@database:5432/postgres?sslmode=disable
 
     depends_on:
-      - db
+      - database
 
   database:
     build: ./database
