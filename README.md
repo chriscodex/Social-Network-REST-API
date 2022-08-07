@@ -25,16 +25,17 @@ Docker will allow you to launch the API service and connect it to the database.
 
 ## API Consumption :desktop_computer:  
 ### Endpoints
-By default the API exposes port `:5050`  
-To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization header`. This token is generated when a registered user logs in.
+By default the API exposes port `:5050` 
+
+To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization` header. This token is generated when a registered user logs in.
 
 - **Home**  
 Shows a welcome message indicating that the connection has been made successfully.  
 
   `GET` `http://localhost:5050/`  
 
-
   Server Response:  
+
   ```
   { 
     "message": "Welcome to the Social Network API", 
@@ -153,6 +154,23 @@ Allows a user to update their post by the post id as a path parameter.
     "message": "Post Updated"
   }
   ```
+
+
+- **Delete a Post**  
+Allows a user to delete their post by the post id as a path parameter.
+
+  `DELETE` `http://localhost:5050/api/posts/{post_id}`
+  
+  Header: `Authorization`  
+  Value: `Token`
+
+  Server Response:
+  ```
+  {
+    "message": "Post deleted"
+  }
+  ```
+
 
 ---  
 
