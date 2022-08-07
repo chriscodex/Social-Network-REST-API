@@ -171,6 +171,20 @@ Allows a user to delete their post by the post id as a path parameter.
   }
   ```
 
+- **Read a Post**  
+Allows reading a post from a user by the post id as a path parameter
+
+  `GET` `http://localhost:5050/posts/{post_id}`
+
+  Server Response:
+  ```
+  {
+    "id": "2D5x9W6yoCZRLPkLbcxvi2HSwuC",
+    "post_content": "Hello everybody, this is my first post",
+    "created_at": "2022-08-08T23:49:55.628695Z",
+    "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+  }
+  ```
 
 ---  
 
