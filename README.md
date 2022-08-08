@@ -28,7 +28,7 @@ This command will start the API service and it will be ready to be consumed.
 
 ---  
 
-### Built with 🛠️:  
+### Built with 🛠️  
 - [Gorilla](https://www.gorillatoolkit.org/) - Web Framework (HTTP & WebSockets)
 - [pq](https://pkg.go.dev/github.com/lib/pq) - PostgresSQL Driver
 - [JSON Web Token (JWT)](https://jwt.io/) - Authorization Credentials
