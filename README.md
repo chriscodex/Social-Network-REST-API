@@ -1,4 +1,4 @@
-# Social Network REST API ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/ChrisCodeX/CRUD-MongoDBAtlas-Go) ![](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white) ![](https://img.shields.io/badge/Docker-blue?style=flat&logo=docker&logoColor=white)
+# **Social Network REST API** ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/ChrisCodeX/CRUD-MongoDBAtlas-Go) ![](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white) ![](https://img.shields.io/badge/Docker-blue?style=flat&logo=docker&logoColor=white)
 This repository contains a complete REST API ready for production of a Social Network, which allows:
 - Register and authenticate users login by tokens.
 - Publish, update, delete and read posts published by users of the social network.
@@ -6,7 +6,7 @@ This repository contains a complete REST API ready for production of a Social Ne
 
 ---
 
-## Pre-Requirements 📋  
+## **Pre-Requirements** 📋  
 - Install Docker  
 Here is the official link to download it: https://www.docker.com/get-started/  
 - Why Docker?  
@@ -14,7 +14,7 @@ Docker will allow you to launch the API service and connect it to the database.
 
 ---
 
-## Instalation 🔧 
+## **Instalation** 🔧 
 - Once the project is cloned, go to the project directory and run this command:
   ```
   docker compose up -d
@@ -23,13 +23,12 @@ Docker will allow you to launch the API service and connect it to the database.
 
 ---  
 
-## API Consumption :desktop_computer:  
-### Endpoints
+## **API Endpoints** :desktop_computer:  
 By default the API exposes port `:5050` 
 
 To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization` header. This token is generated when a registered user logs in.
 
-- **Home**  
+- ### **Home**  
 Shows a welcome message indicating that the connection has been made successfully.  
 
   `GET` `http://localhost:5050/`  
@@ -43,7 +42,7 @@ Shows a welcome message indicating that the connection has been made successfull
   }
   ```  
 
-- **Read Posts**  
+- ### **Read Posts**
 Calling this endpoint will return a paginated list of all posts published by users. By default, a list page will contain 2 resources. If you want to change that, just add a query parameter `size` to the GET request. If you want to go to the next page, use the query parameter `page`. By the way, the pages start counting from zero.
 
   `GET` `http://localhost:5050/posts`
@@ -104,7 +103,7 @@ Calling this endpoint will return a paginated list of all posts published by use
   ]
   ```
 
-- **Read a Post**  
+- ### **Read a Post**  
 Allows reading a post from a user by the post id as a path parameter
 
   `GET` `http://localhost:5050/posts/{post_id}`
@@ -118,10 +117,9 @@ Allows reading a post from a user by the post id as a path parameter
     "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
   }
   ```
-
   
-- **Signup**  
-Allows user registration.  
+- ### **Signup**  
+Allows to register a new user.  
 
   `POST` `http://localhost:5050/signup`
 
@@ -144,7 +142,7 @@ Allows user registration.
   ```  
   The server responds with an unique ID for the registered email. If you try to register a new user with the same email, the server will respond with an error.  
 
-- **Login**  
+- ### **Login**  
 Allows users to log in to the Social Network.
 
   `POST` `http://localhost:5050/login`  
@@ -169,7 +167,7 @@ Allows users to log in to the Social Network.
   This token is unique. It is signed and associated with the user who logged in. The validity of this token is 48 hours after being generated.  
   Send this token as an `Authorization` header to get access to endpoints that include the path parameter `/api`
 
-- **Check my User Data**  
+- ### **Check my User Data**  
 Allows the user to review their login details.
 
   `GET` `http://localhost:5050/api/me`  
@@ -187,7 +185,7 @@ Allows the user to review their login details.
   ```  
   The password is not returned for security reasons.
   
-- **Create a New Post**
+- ### **Create a New Post**  
 Allows users to create a new post
 
   `POST` `http://localhost:5050/api/posts`
@@ -211,7 +209,7 @@ Allows users to create a new post
   ```
   The server responds with an unique id for the post created
 
-- **Update a Post**  
+- ### **Update a Post**  
 Allows a user to update their post by the post id as a path parameter.
 
   `PUT` `http://localhost:5050/api/posts/{post_id}`
@@ -234,7 +232,7 @@ Allows a user to update their post by the post id as a path parameter.
   ```
 
 
-- **Delete a Post**  
+- ### **Delete a Post**  
 Allows a user to delete their post by the post id as a path parameter.
 
   `DELETE` `http://localhost:5050/api/posts/{post_id}`
@@ -248,10 +246,6 @@ Allows a user to delete their post by the post id as a path parameter.
     "message": "Post deleted"
   }
   ```
-
-
-
-
 
 ---  
 
