@@ -42,6 +42,84 @@ Shows a welcome message indicating that the connection has been made successfull
     "status": true 
   }
   ```  
+
+- **Read Posts**  
+Calling this endpoint will return a paginated list of all posts published by users. By default, a list page will contain 2 resources. If you want to change that, just add a query parameter `size` to the GET request. If you want to go to the next page, use the query parameter `page`. By the way, the pages start counting from zero.
+
+  `GET` `http://localhost:5050/posts`
+
+  Server Response: 
+
+  ```diff
+  [
+    {
+        "id": "2D5x9W6yoCZRLPkLbcxvi2HSwuC",
+  !      "post_content": "Hello everybody, this is my first post",
+        "created_at": "2022-08-08T23:49:55.628695Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    },
+    {
+        "id": "2D5yTeD0YCtlrP2tTdqHY8SEori",
+  !      "post_content": "This is my second post",
+        "created_at": "2022-08-09T00:00:48.239374Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    }
+  ]
+  ```  
+
+  Example using query parameters:  
+
+  `GET` `http://localhost:5050/posts?size=4&page=1`
+
+  This call returns the second page of posts in a list of 4 resources.
+
+  Server Response: 
+
+  ```diff
+  [
+    {
+        "id": "2D5ybq79jOE6Zu3hACxbq6Fvo8N",
+  !      "post_content": "This is my fifth post",
+        "created_at": "2022-08-09T00:01:53.549583Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    },
+    {
+        "id": "2D5ydIDjbPcXTp9k2TaEJpxYua4",
+  !      "post_content": "This is my sixth post",
+        "created_at": "2022-08-09T00:02:05.24609Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    },
+    {
+        "id": "2D5yfBfKiVjTOGRhOS3ylLhnf10",
+  !      "post_content": "This is my seventh post",
+        "created_at": "2022-08-09T00:02:20.580479Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    },
+    {
+        "id": "2D5yhuW35muasIdxU9gCX6k74n0",
+  !      "post_content": "This is my eighth post",
+        "created_at": "2022-08-09T00:02:42.764285Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    }
+  ]
+  ```
+
+- **Read a Post**  
+Allows reading a post from a user by the post id as a path parameter
+
+  `GET` `http://localhost:5050/posts/{post_id}`
+
+  Server Response:
+  ```
+  {
+    "id": "2D5x9W6yoCZRLPkLbcxvi2HSwuC",
+    "post_content": "Hello everybody, this is my first post",
+    "created_at": "2022-08-08T23:49:55.628695Z",
+    "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+  }
+  ```
+
+  
 - **Signup**  
 Allows user registration.  
 
@@ -171,44 +249,9 @@ Allows a user to delete their post by the post id as a path parameter.
   }
   ```
 
-- **Read a Post**  
-Allows reading a post from a user by the post id as a path parameter
 
-  `GET` `http://localhost:5050/posts/{post_id}`
 
-  Server Response:
-  ```
-  {
-    "id": "2D5x9W6yoCZRLPkLbcxvi2HSwuC",
-    "post_content": "Hello everybody, this is my first post",
-    "created_at": "2022-08-08T23:49:55.628695Z",
-    "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
-  }
-  ```
 
-- **Read Posts**  
-Calling this endpoint will return a paginated list of all posts published by users. By default, a list page will contain 2 resources. If you want to change that, just add a query parameter `size` to the GET request. If you want to go to the next page, use the query parameter `page`.
-
-  `GET` `http://localhost:5050/posts`
-
-  Server Response:
-
-  ```diff
-  [
-    {
-        "id": "2D5x9W6yoCZRLPkLbcxvi2HSwuC",
-        ! "post_content": "Hello everybody, this is my first post",
-        "created_at": "2022-08-08T23:49:55.628695Z",
-        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
-    },
-    {
-        "id": "2D5yTeD0YCtlrP2tTdqHY8SEori",
-        ! "post_content": "This is my second post",
-        "created_at": "2022-08-09T00:00:48.239374Z",
-        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
-    }
-  ]
-  ```
 
 ---  
 
