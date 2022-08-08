@@ -186,6 +186,30 @@ Allows reading a post from a user by the post id as a path parameter
   }
   ```
 
+- **Read Posts**  
+Calling this endpoint will return a paginated list of all posts published by users. By default, a list page will contain 2 resources. If you want to change that, just add a query parameter `size` to the GET request. If you want to go to the next page, use the query parameter `page`.
+
+  `GET` `http://localhost:5050/posts`
+
+  Server Response:
+
+  ```diff
+  [
+    {
+        "id": "2D5x9W6yoCZRLPkLbcxvi2HSwuC",
+        ! "post_content": "Hello everybody, this is my first post",
+        "created_at": "2022-08-08T23:49:55.628695Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    },
+    {
+        "id": "2D5yTeD0YCtlrP2tTdqHY8SEori",
+        ! "post_content": "This is my second post",
+        "created_at": "2022-08-09T00:00:48.239374Z",
+        "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    }
+  ]
+  ```
+
 ---  
 
 ## Built with 🛠️  
