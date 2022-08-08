@@ -33,4 +33,4 @@ This command will start the API service and it will be ready to be consumed.
 - [JSON Web Token (JWT)](https://jwt.io/) - Authorization Credentials
 - [Bcrypt](https://pkg.go.dev/golang.org/x/crypto/bcrypt) - Data Encryption
 - [Pq](https://pkg.go.dev/github.com/lib/pq) - PostgresSQL Driver
-- [KSUID](https://segment.com/blog/a-brief-history-of-the-uuid/) - ID Creations
+- [KSUID](https://segment.com/blog/a-brief-history-of-the-uuid/) - ID Generator
