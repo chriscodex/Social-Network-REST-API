@@ -11,3 +11,12 @@ This repository contains a complete REST API ready for production of a social ne
 Here is the official link to download it: https://www.docker.com/get-started/  
 - Why Docker?  
 Docker will allow you to launch the API service and connect it to the database.
+
+---
+
+### Instalation 🔧 
+- Once the project is cloned, go to the project directory and run this command:
+```
+docker compose up -d
+```  
+This command will start the API service and it will be ready to be consumed.
