@@ -2,7 +2,7 @@
 This repository contains a complete REST API ready for production of a Social Network, which allows:
 - Register and authenticate users login by tokens.
 - Publish, update, delete and read posts published by users of the social network.
-- Users can receive notifications of new posts published.
+- Clients can receive notifications of new posts published by WebSockets.
 
 ---
 
