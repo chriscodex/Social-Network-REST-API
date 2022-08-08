@@ -7,7 +7,7 @@ This repository contains a complete REST API ready for production of a Social Ne
 ---
 
 ### Pre-Requirements 📋  
-- Install Docker:  
+- Install Docker  
 Here is the official link to download it: https://www.docker.com/get-started/  
 - Why Docker?  
 Docker will allow you to launch the API service and connect it to the database.
@@ -30,7 +30,7 @@ This command will start the API service and it will be ready to be consumed.
 
 ### Built with 🛠️  
 - [Gorilla](https://www.gorillatoolkit.org/) - Web Framework (HTTP & WebSockets)
-- [pq](https://pkg.go.dev/github.com/lib/pq) - PostgresSQL Driver
 - [JSON Web Token (JWT)](https://jwt.io/) - Authorization Credentials
 - [Bcrypt](https://pkg.go.dev/golang.org/x/crypto/bcrypt) - Data Encryption
+- [Pq](https://pkg.go.dev/github.com/lib/pq) - PostgresSQL Driver
 - [KSUID](https://segment.com/blog/a-brief-history-of-the-uuid/) - ID Creations
