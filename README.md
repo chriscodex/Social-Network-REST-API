@@ -23,7 +23,7 @@ Docker will allow you to launch the API service and connect it to the database.
 
 ---  
 
-## **API Endpoints** :desktop_computer:  
+## **HTTP Endpoints** :desktop_computer:  
 By default the API exposes port `:5050` 
 
 To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).  
@@ -255,9 +255,29 @@ Allows a user to delete their post by the post id as a path parameter.
   {
     "message": "Post deleted"
   }
-  ```
-
+  ```  
 ---  
+
+## **WebSocket**   
+The websocket sends a response each time a new post is created.   
+ 
+- ### **WebSocket Connection**  
+  URL: `localhost:5050/ws`  
+  To connect to the websocket, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).  
+
+- ### **Server Response Example**   
+  ```
+  {
+    "type": "Post_Created",
+    "payload": {
+      "id": "2D5sk2VQz4UhYrRX3GENhq1yAVV",
+      "post_content": "My websocket post",
+      "created_at": "2022-08-08T23:49:55.628695Z",
+      "user_id": "2D5sgDWHKO49madbrOSVCOr2hz0"
+    }
+  }
+  ```
+--- 
 
 ## Built with 🛠️  
 - [Gorilla](https://www.gorillatoolkit.org/) - Web Framework (HTTP & WebSockets)
