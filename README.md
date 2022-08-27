@@ -30,6 +30,13 @@ To access endpoints that include the path parameter `/api`, they will need to se
 
 1. [Home](#Home)  
 2. [Read Posts](#read-posts)
+3. [Read a Post](#read-a-post)
+4. [Signup](#signup)
+5. [Login](#login)
+6. [Check my User Data](#check-my-user-data)
+7. [Create a New Post](#create-a-new-post)
+8. [Update a Post](#update-a-post)
+9. [Delete a Post](#delete-a-post)
 
 - ### **Home**  
 Shows a welcome message indicating that the connection has been made successfully.  
