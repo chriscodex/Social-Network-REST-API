@@ -28,8 +28,8 @@ By default the API exposes port `:5050`
 
 To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).  
 
-1. [Home](###Home)  
-2. [Read Posts](###ReadPosts)
+1. [Home](#Home)  
+2. [Read Posts](#read-posts)
 
 - ### **Home**  
 Shows a welcome message indicating that the connection has been made successfully.  
