@@ -265,7 +265,7 @@ The websocket sends a response each time a new post is created.
   URL: `localhost:5050/ws`  
   To connect to the websocket, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).  
 
-- ### **Server Response Example**   
+- ### **Server Response Example** :computer:  
   ```
   {
     "type": "Post_Created",
