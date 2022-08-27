@@ -26,7 +26,10 @@ Docker will allow you to launch the API service and connect it to the database.
 ## **API Endpoints** :desktop_computer:  
 By default the API exposes port `:5050` 
 
-To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).
+To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).  
+
+1. [Home](###Home)  
+2. [Read Posts](###ReadPosts)
 
 - ### **Home**  
 Shows a welcome message indicating that the connection has been made successfully.  
