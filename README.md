@@ -7,10 +7,10 @@ This repository contains a complete REST API ready for production of a Social Ne
 ---
 
 ## **Table of Contents** 📖  
-1. [Pre-Requirements](#pre-requirements-📋)
-2. [Installation](#installation-🔧)
-3. [HTTP Endpoints](#http-endpoints-desktopcomputer)
-4. [WebSocket](#websocket-computer)
+1. [Pre-Requirements](#pre-requirements-)
+2. [Installation](#installation-)
+3. [HTTP Endpoints](#http-endpoints-)
+4. [WebSocket](#websocket-)
 
 ---
 ## **Pre-Requirements** 📋  
@@ -30,7 +30,7 @@ Docker will allow you to launch the API service and connect it to the database.
 
 ---  
 
-## **HTTP Endpoints** :desktop_computer:  
+## **HTTP Endpoints** 🖥️  
 By default the API exposes port `:5050` 
 
 To access endpoints that include the path parameter `/api`, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).  
@@ -265,7 +265,7 @@ Allows a user to delete their post by the post id as a path parameter.
   ```  
 ---  
 
-## **WebSocket** :computer:  
+## **WebSocket** 💻  
 The websocket sends a response each time a new post is created.   
  
 - ### **WebSocket Connection**  
