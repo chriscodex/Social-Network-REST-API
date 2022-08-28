@@ -9,7 +9,7 @@ This repository contains a complete REST API ready for production of a Social Ne
 ## **Table of Contents** 📖  
 1. [Pre-Requirements](#pre-requirements-)
 2. [Installation](#installation-)
-3. [HTTP Endpoints](#http-endpoints-)
+3. [HTTP Endpoints](#http-endpoints-desktop_computer)
 4. [WebSocket](#websocket-)
 
 ---
