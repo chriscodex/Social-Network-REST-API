@@ -6,6 +6,13 @@ This repository contains a complete REST API ready for production of a Social Ne
 
 ---
 
+## **Table of Contents**  
+1. [Pre-Requirements](#pre-requirements-📋)
+2. [Installation](#installation-🔧)
+3. [HTTP Endpoints](#http-endpoints-desktopcomputer)
+4. [WebSocket](#websocket-computer)
+
+---
 ## **Pre-Requirements** 📋  
 - Install Docker  
 Here is the official link to download it: https://www.docker.com/get-started/  
@@ -14,7 +21,7 @@ Docker will allow you to launch the API service and connect it to the database.
 
 ---
 
-## **Instalation** 🔧 
+## **Installation** 🔧 
 - Once the project is cloned, go to the project directory and run this command:
   ```
   docker compose up -d
