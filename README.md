@@ -268,7 +268,7 @@ Allows a user to delete their post by the post id as a path parameter.
 ## **WebSocket** 💻  
 The websocket sends a response each time a new post is created.   
  
-- ### **WebSocket Connection**  
+- ### **Connection**  
   URL: `localhost:5050/ws`  
   To connect to the websocket, they will need to send a token as an `Authorization` header. This token is generated when a registered user [logs in](#login).  
 
