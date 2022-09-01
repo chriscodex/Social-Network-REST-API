@@ -10,7 +10,7 @@ import (
 )
 
 var upgrader = websocket.Upgrader{
-	// Restrict access to clients
+	// Prevent cross-site request forgery
 	CheckOrigin: func(r *http.Request) bool { return true },
 }
 
