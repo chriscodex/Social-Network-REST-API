@@ -88,7 +88,6 @@ func (hub *Hub) onDisconnect(client *Client) {
 	copy(hub.clients[i:], hub.clients[i+1:])
 	hub.clients[len(hub.clients)-1] = nil
 	hub.clients = hub.clients[:len(hub.clients)-1]
-
 }
 
 // Run WebSocket
