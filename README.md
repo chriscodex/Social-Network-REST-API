@@ -250,7 +250,7 @@ Allows a user to update their post by the post id as a path parameter.
 
 
 - ### **Delete a Post**  
-Allows a user to delete their post by the post id as a path parameter.
+Allows a user to delete their post by the post id as a path parameter. Only the user who created the past can delete it.
 
   `DELETE` `http://localhost:5050/api/posts/{post_id}`
   
