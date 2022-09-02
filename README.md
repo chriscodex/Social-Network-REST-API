@@ -289,6 +289,7 @@ The websocket sends a response each time a new post is created.
 ## Built with 🛠️  
 - [Gorilla](https://www.gorillatoolkit.org/) - Web Framework (HTTP & WebSockets)
 - [JSON Web Token (JWT)](https://jwt.io/) - Authorization Credentials
+- [CORS](https://github.com/rs/cors) - CORS Handler
 - [Bcrypt](https://pkg.go.dev/golang.org/x/crypto/bcrypt) - Data Encryption
 - [Pq](https://pkg.go.dev/github.com/lib/pq) - PostgresSQL Driver
 - [KSUID](https://segment.com/blog/a-brief-history-of-the-uuid/) - ID Generator
