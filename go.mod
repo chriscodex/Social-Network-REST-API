@@ -1,4 +1,4 @@
-module github.com/ChrisCodeX/REST-API-Go
+module github.com/chriscodex/REST-API-Go
 
 go 1.17
 
