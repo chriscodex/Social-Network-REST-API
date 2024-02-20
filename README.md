@@ -1,4 +1,6 @@
 # **Social Network REST API** ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/ChrisCodeX/CRUD-MongoDBAtlas-Go) ![](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white) ![](https://img.shields.io/badge/Docker-blue?style=flat&logo=docker&logoColor=white)
+
+![wallpaper](https://github.com/chriscodex/Social-Network-REST-API/assets/106860308/7a70d875-b60a-433f-9eec-12e47aea2e15)
 This repository contains a complete REST API ready for production of a Social Network, which allows:
 - Register and authenticate users login by tokens.
 - Publish, update, delete and read posts published by users of the social network.
